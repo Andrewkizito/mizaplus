@@ -1,0 +1,15 @@
+{
+    "ecommerce": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-mizaplus-ecommerce-95359-authRole",
+            "UnauthRoleArn": "arn:aws:iam::316190357269:role/amplify-mizaplus-ecommerce-95359-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::316190357269:role/amplify-mizaplus-ecommerce-95359-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "amplify-mizaplus-ecommerce-95359-deployment",
+            "UnauthRoleName": "amplify-mizaplus-ecommerce-95359-unauthRole",
+            "StackName": "amplify-mizaplus-ecommerce-95359",
+            "StackId": "arn:aws:cloudformation:us-east-2:316190357269:stack/amplify-mizaplus-ecommerce-95359/10a03910-0933-11eb-bc15-021f5547ac76",
+            "AmplifyAppId": "d3k1f9nieqdhdk"
+        }
+    }
+}

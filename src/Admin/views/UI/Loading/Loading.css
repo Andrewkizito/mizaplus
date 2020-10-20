@@ -1,0 +1,16 @@
+.Loader-Box {
+    background-color: inherit;
+    height: auto;
+    position: relative;
+}
+
+.Loading-Box {
+    height: auto;
+    text-align: center;
+    padding: 200px auto;
+    margin: 120px auto;
+}
+
+.Loading-Box p {
+    color: #3b5998;
+}
