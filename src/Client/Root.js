@@ -30,7 +30,6 @@ const Root = () => {
                 <BrowserRouter>
                     <Switch>
                         <Route path="/admin" component={Admin}/>
-                        <Route path="/product-page" component={ProductPage} />
                         <Route path="/product/:id" component={ProductView} />
                         <Route path="/cart" component={Cart} />
                         <Route path="/" component={Home}/>
