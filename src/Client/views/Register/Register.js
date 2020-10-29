@@ -55,7 +55,7 @@ const Register = (props) => {
     <div className="SignIn-Box">
       <Card className="SignIn">
         <section className="Header-Section">
-          <span className="Heading">Regsiter Now</span>
+          <span className="Heading">Register Now</span>
         </section>
         {ui.error && (
           <Notification text={ui.error} color="danger" close />
