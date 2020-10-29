@@ -1,0 +1,80 @@
+.Backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 990;
+}
+
+.GiftCard {
+    position: absolute;
+    height: auto;
+    z-index: 1000;
+    width: 60%;
+    margin: 100px auto;
+    left: 20%;
+    padding: 2rem 1rem;
+}
+
+.GiftCard h3 {
+    font-weight: 600;
+    color: green;
+    text-align: center;
+}
+
+
+.GiftCard h3::after {
+    content: " ";
+    display: block;
+    width: 300px;
+    height: 3px;
+    background-color: #eae9e9;
+    margin-top: 1rem;
+}
+
+.GiftCard p {
+    font-weight: 600;
+    margin-top: 1rem;
+    font-size: 18px;
+    text-align: center;
+}
+
+.GiftCard ul {
+    list-style: none;
+}
+
+.GiftCard ul li {
+    padding: 0.4rem;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.GiftCard ul li span {
+    font-weight: 400;
+    font-size: 15px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+       opacity: 1;
+    }
+}
+
+@media (max-width: 500px) {
+    .GiftCard {
+        height: auto;
+        z-index: 1000;
+        width: 90%;
+        margin: 100px auto;
+        left: 5%;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
+}

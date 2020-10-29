@@ -1,0 +1,82 @@
+.about-area {
+    background-color: rgb(252, 251, 251);
+    padding: 4rem 2rem;
+    padding-top: 5rem;
+}
+  
+.single-well>a {
+    display: block;
+}
+  
+.single-well ul li {
+    color: #444;
+    display: block;
+    padding: 5px 0;
+}
+  
+.single-well ul li i {
+    color: #3EC1D5;
+    padding-right: 10px;
+    font-size: 12px;
+}
+  
+.single-well p {
+    color: #444;
+}
+
+.Image {
+    width: 90%;
+    max-height: 300px;
+    object-position: center;
+}
+
+.sec-head {
+    text-decoration: none;
+    display: inline-block;
+    color: #333;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding: 0 0 10px;
+    text-transform: uppercase;
+    transition: all 0.4s ease 0s;
+}
+
+.services-icon {
+    color: #444;
+    display: inline-block;
+    font-size: 36px;
+    line-height: 36px;
+    margin-bottom: 20px;
+}
+  
+.section-headline.services-head>h2 {
+    margin-bottom: 25px;
+}
+  
+.services-details {
+    padding-top: 40px;
+    transition: all 0.5s ease 0s;
+    padding-bottom: 80px;
+}
+  
+.row.second-row {
+    margin-top: 40px;
+}
+  
+.section-head>h2 {
+    color: #333;
+}
+  
+.single-services>h4 {
+    color: #444;
+    font-size: 24px;
+    font-weight: 500;
+}
+  
+.single-services>p {
+    color: #333;
+    font-size: 14px;
+}
+
+.text-center { text-align: center; }

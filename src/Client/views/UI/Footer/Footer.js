@@ -17,48 +17,10 @@ const MizaplusFooter = () => {
     const classes = useStyles();
     return (
         <Footer
+          theme="dark"
           content={
             <div>
-              <div className={classes.left}>
-                <List className={classes.list}>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="#"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      Mizaplus
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="#"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      About us
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="#"
-                      className={classes.block}
-                    >
-                      Blog
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href="#"
-                      target="_blank"
-                      className={classes.block}
-                    >
-                      Licenses
-                    </a>
-                  </ListItem>
-                </List>
-              </div>
-              <div className={classes.right}>
+              <div>
                 &copy; {1900 + new Date().getYear()} ,developed {" "}
                 <Favorite className={classes.icon} /> by{" "}
                 <a

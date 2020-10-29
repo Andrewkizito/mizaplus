@@ -2,17 +2,19 @@ import React from 'react';
 
 //Importing helper functions
 import { makeStyles } from "@material-ui/core";
+import { connect } from "react-redux";
 
 //Importing core components
 import { List,ListItem,InputAdornment,TextField } from '@material-ui/core';
 import Button from 'Client/components/CustomButtons/Button';
 import Dropdown from 'Client/components/CustomDropdown/CustomDropdown';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Header from 'Client/components/Header/Header';
-import { ShoppingCartOutlined,SearchOutlined,CardGiftcard,PersonOutline, Edit, ShoppingBasket, CreditCardOutlined, CallOutlined, InfoOutlined, ContactSupportOutlined } from '@material-ui/icons';
+import { ShoppingCartOutlined,SearchOutlined,CardGiftcard,PersonOutline, Edit, ShoppingBasket, CreditCardOutlined, CallOutlined, InfoOutlined, ContactSupportOutlined, Person, ExitToApp } from '@material-ui/icons';
 
 //Importing styles
 import styles from 'Client/assets/jss/material-kit-pro-react/components/headerLinksStyle';
+import { SignOut } from 'Client/store/Actions/ActionTypes';
 
 const useStyles = makeStyles(styles);
 const useStyles2 = makeStyles((theme) => ({
@@ -21,9 +23,14 @@ const useStyles2 = makeStyles((theme) => ({
     },
 }));
 
-const MizaplusHeader = () => {
+const MizaplusHeader = ({AuthState,user,signOut,history}) => {
     const classes = useStyles();
     const classes2 = useStyles2();
+
+    const logOut = () => {
+      history.push("/about-us");
+      signOut();
+    }
 
     return (
         <Header
@@ -35,25 +42,7 @@ const MizaplusHeader = () => {
           links={
             <div className={classes.collapse}>
               <List className={classes.list + " " + classes.mlAuto}>
-                <TextField
-                    fullWidth={true}
-                    variant={"outlined"}
-                    className={classes2.margin}
-                    id="input-with-icon-textfield"
-                    placeholder="Search Products"
-                    margin="dense"
-                    InputProps={{
-                        startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchOutlined />
-                        </InputAdornment>
-                        ),
-                    }}
-                />
-                <Button color="warning">Search</Button>
-              </List>
-              <List className={classes.list + " " + classes.mlAuto}>
-                <ListItem className={classes.listItem}>
+                { !AuthState && <ListItem className={classes.listItem}>
                     <Dropdown
                         noLiPadding
                         navDropdown
@@ -61,7 +50,7 @@ const MizaplusHeader = () => {
                         buttonText="Offers"
                         buttonProps={{
                             className: classes.navLink,
-                            color: "transparent"
+                            color: "transparent" 
                         }}
                         buttonIcon={CardGiftcard}
                         dropdownList={[
@@ -72,7 +61,7 @@ const MizaplusHeader = () => {
                             <Edit className={classes.dropdownIcons} /> Register
                             </Link>
                         ]}/>
-                </ListItem>
+                </ListItem>}
                 <ListItem className={classes.listItem} onClick={() => window.scrollTo({top: 0})}>
                    <Link to="/cart" className={classes.navLink}><ShoppingCartOutlined/> Cart</Link>
                 </ListItem>
@@ -93,15 +82,30 @@ const MizaplusHeader = () => {
                             </Link>,
                             <Link to="/support" className={classes.dropdownLink}>
                               <CallOutlined className={classes.dropdownIcons}/> Call
-                            </Link>,
-                            <Link to="/register" className={classes.dropdownLink}>
-                              <ShoppingBasket className={classes.dropdownIcons} /> Track Order
-                            </Link>,
-                            <Link to="/register" className={classes.dropdownLink}>
-                              <CreditCardOutlined className={classes.dropdownIcons} /> Payment Methods
                             </Link>
                         ]}/>
                 </ListItem>
+                { AuthState && 
+                  <ListItem className={classes.listItem}>
+                    <Dropdown
+                        noLiPadding
+                        navDropdown
+                        hoverColor={"warning"}
+                        buttonText={user}
+                        buttonProps={{
+                            className: classes.navLink,
+                            color: "transparent"
+                        }}
+                        buttonIcon={Person}
+                        dropdownList={[
+                            <Link className={classes.dropdownLink} onClick={() => logOut()}>
+                              <ExitToApp/> Log out
+                            </Link>,
+                            <Link to="/orders" className={classes.dropdownLink}>
+                              <CreditCardOutlined/> Orders Placed
+                            </Link>
+                        ]}/>
+                </ListItem>}
               </List>
             </div>
           }
@@ -109,4 +113,17 @@ const MizaplusHeader = () => {
     )
 }
 
-export default MizaplusHeader;
+const mapStateToProps = state => {
+    return {
+       AuthState: state.AuthState,
+       user: state.user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signOut: () => dispatch(SignOut())
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MizaplusHeader));

@@ -15,10 +15,11 @@ import Card from "Client/components/Card/Card.js";
 import CardBody from "Client/components/Card/CardBody.js";
 import GridItem from "Client/components/Grid/GridItem";
 import GridContainer from "Client/components/Grid/GridContainer";
-import { FormControl,Select,MenuItem,TextField,ListItem } from "@material-ui/core";
+import { FormControl,Select,MenuItem,TextField } from "@material-ui/core";
 import Muted from "Client/components/Typography/Muted";
 import Paginations from "Client/components/Pagination/Pagination";
 import ScrollAnimation from "react-animate-on-scroll";
+import Success from "Client/components/Typography/Success";
 
 // @material-ui/icons
 import { Close,Add,Remove,KeyboardArrowRight } from "@material-ui/icons";
@@ -33,21 +34,19 @@ import credit1 from "Client/assets/images/credit.png";
 import credit2 from "Client/assets/images/credit1.png";
 import credit3 from "Client/assets/images/credit2.png";
 
+import './Cart.css';
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles(shoppingCartStyle);
 
 const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
   const [ cartItems,setCartItems ] = useState(null);
   const [ totalPrice,setPrice ] = useState(null);
-  const [ navCount,setCount ] = useState(1);
-
-  const [ cardSelect,selectCard ] = useState("PayPal");
 
   const classes = useStyles();
 
-  const cards = [{name: "American Express",image: credit1},{name: "Capital One",image: credit2},{name: "PayPal",image: credit3}];
-
   useEffect(() => {
-      if(MyCart.length > 0){
+      if(MyCart && MyCart.length > 0){
         const cartMarkUp = [...MyCart].map(cartItem => {
             return [
                <div className={classes.imgContainer} key={1}>
@@ -101,26 +100,16 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
         setCartItems(cartMarkUp);
       }
   },[MyCart]);
+
   return (
       <div>
         <MizaplusHeader/>
         <div style={{paddingTop: "90px"}} className={classNames(classes.main)}>
             <div className={classes.container}>
-                { (cartItems && cartItems.length > 0) && 
-                  <Paginations
-                    color="info"
-                    pages={[
-                        { text: 'PREV',onClick: () => setCount(navCount - 1),disabled: navCount === 1 ? true : false},
-                        { text: '1',onClick: () => setCount(1),active: navCount === 1 ? true: false},
-                        { text: '2',onClick: () => setCount(2),active: navCount === 2 ? true: false},
-                        { text: 'NEXT',onClick: () => setCount(navCount + 1),disabled: navCount === 2 ? true : false}
-                    ] 
-                    }
-                 />}
-                <h3 className={classes.cardTitle}>{navCount === 1 ? "Shopping Cart" : "CheckOut"}</h3>
+                <h3 className={classes.cardTitle}>Shopping Cart</h3>
                 <Card plain>
                     <CardBody plain>
-                    { (cartItems && cartItems.length > 0 && navCount === 1) &&
+                    { (cartItems && cartItems.length > 0) &&
                         <ScrollAnimation animateIn="animate__fadeIn" duration={3}>
                             <Table
                                 tableHead={[
@@ -144,9 +133,11 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
                                     col: {
                                     colspan: 3,
                                     text: (
-                                        <Button color="warning" round onClick={() => setCount(2)}>
-                                        Complete Purchase <KeyboardArrowRight />
-                                        </Button>
+                                        <Link to="/checkout">
+                                            <Button color="warning" round>
+                                            Complete Purchase <KeyboardArrowRight />
+                                            </Button>
+                                        </Link>
                                     )
                                     }
                                 }
@@ -176,41 +167,6 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
                     <div className={classes.EmptyCart}>
                         <Muted variant="h3">No Products Available In Cart.</Muted>
                     </div> }
-                    { navCount === 2 &&
-                        <GridContainer>
-                            <GridItem sm={12} md={6} lg={6}>
-                                <h4 className={classes.orderSummaryTitle}>Order Summary</h4>
-                                <table>
-                                   <thead>
-                                     <td></td>
-                                   </thead>
-                                </table>
-                            </GridItem>
-                            <GridItem sm={12} md={6} lg={6}>
-                                <GridContainer>
-                                <GridItem sm={12} md={10} lg={10}>
-                                    <FormControl className={classes.selectFormControl} fullWidth>
-                                        <TextField label="Your Name" variant="outlined" margin="dense" fullWidth/>
-                                        <TextField label="Phone Number" variant="outlined" margin="dense" fullWidth/>
-                                        <TextField label="City" variant="outlined" margin="dense" fullWidth/>
-                                        <TextField label="Email" variant="outlined" margin="dense" style={{marginRight: "0.2rem"}} fullWidth/>
-                                        <Select variant="outlined" margin="dense" style={{padding: "0.4rem",fontSize: "30px"}} 
-                                            MenuProps={{className: classes.selectMenu}} classes={{ select: classes.select }} 
-                                            defaultValue={"PayPal"} value={cardSelect} onChange={event => selectCard(event.target.value)}
-                                            inputProps={{name: "amountSelect",id: "amount-select"}}>
-                                           { cards.map(card => 
-                                                <MenuItem classes={{root: classes.selectMenuItem,selected: classes.selectMenuItemSelected}}value={card.name}>
-                                                    <img src={card.image} alt="..." style={{height: "25px"}}/>
-                                                </MenuItem>
-                                            ) }
-                                        </Select>
-                                        <TextField label="Credit Card" variant="outlined" margin="dense" style={{marginRight: "0.2rem"}} fullWidth/>
-                                        <Button color="success" fullwidth>Place Order</Button>
-                                    </FormControl>
-                                    </GridItem>
-                                </GridContainer>
-                            </GridItem>
-                        </GridContainer> }
                     </CardBody>
                 </Card>
             </div>

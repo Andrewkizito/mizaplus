@@ -10,6 +10,11 @@
             "StackName": "amplify-mizaplus-ecommerce-95359",
             "StackId": "arn:aws:cloudformation:us-east-2:316190357269:stack/amplify-mizaplus-ecommerce-95359/10a03910-0933-11eb-bc15-021f5547ac76",
             "AmplifyAppId": "d3k1f9nieqdhdk"
+        },
+        "categories": {
+            "auth": {
+                "mizaplusc10e3de9": {}
+            }
         }
     }
 }

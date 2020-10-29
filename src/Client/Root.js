@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Route, Switch } from "react-router";
 
@@ -8,36 +8,72 @@ import "../Client/assets/scss/material-kit-pro-react.scss?v=1.9.0";
 import { BrowserRouter } from 'react-router-dom';
 import Notifications from './views/UI/Notifications/Notifications';
 import ProductView from './views/ProductView/ProductView';
-import Admin from 'Admin/Index';
 import Cart from  './views/Cart/Cart';
+import Checkout from './views/Checkout/Checkout';
+import LogIn from './views/LogIn/LogIn';
 import Home from './views/Home/Home';
+import { connect } from 'react-redux';
+import { AutoAuth, setCartFromLocalStorage } from './store/Actions/ActionTypes';
+import Register from './views/Register/Register';
+import SectionContact from './views/ContactUs/Contact';
+import AboutUs from './views/AboutUs/AboutUs';
+import ChangePassword from './views/ChangePassword/ChangePassword';
+import ResetPassword from './views/ResetPassword/ResetPassword';
+import Orders from './views/Orders/Orders';
 
-//Redux Store Imports
-import { compose,createStore,applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import Thunk from 'redux-thunk';
-import reducer from "./store/Reducer/Reducer";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export const store = createStore(reducer,composeEnhancers(applyMiddleware(Thunk)));
-
-const Root = () => {
+const Root = ({autoAuth,setCartFromLocalStorage,AuthState}) => {
+    useEffect(() => {
+        autoAuth();
+        setCartFromLocalStorage();
+    }, [])
+    
     return (
-        <Provider store={store}>
-            <div>
-                <Notifications/>
-                <BrowserRouter>
+        <div>
+            <Notifications/>
+            <BrowserRouter>
+                { !AuthState ?
                     <Switch>
-                        <Route path="/admin" component={Admin}/>
+                        <Route path="/reset-password" component={ChangePassword} />
+                        <Route path="/forgot-password" component={ResetPassword} />
+                        <Route path="/change-password" component={ResetPassword} />
+                        <Route path="/login" component={LogIn} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/about-us" component={AboutUs} />
+                        <Route path="/support" component={SectionContact} />
                         <Route path="/product/:id" component={ProductView} />
+                        <Route path="/checkout" component={Checkout} />
                         <Route path="/cart" component={Cart} />
                         <Route path="/" component={Home}/>
                     </Switch>
-                </BrowserRouter>
-            </div>
-        </Provider>
+                    :
+                    <Switch>
+                        <Route path="/about-us" component={AboutUs} />
+                        <Route path="/orders" component={Orders} />
+                        <Route path="/login" component={LogIn} />
+                        <Route path="/support" component={SectionContact} />
+                        <Route path="/product/:id" component={ProductView} />
+                        <Route path="/checkout" component={Checkout} />
+                        <Route path="/cart" component={Cart} />
+                        <Route path="/" component={Home}/>
+                    </Switch>
+                 }
+            </BrowserRouter>
+        </div>
     )
 }
 
-export default Root;
+const mapStateToProps = state => {
+    return {
+        AuthState: state.AuthState
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        autoAuth: () => dispatch(AutoAuth()),
+        setCartFromLocalStorage: () => dispatch(setCartFromLocalStorage())
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Root);

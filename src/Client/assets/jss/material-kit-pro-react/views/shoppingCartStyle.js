@@ -128,14 +128,7 @@ const styles = {
   },
   orderSummaryTitle: {
     color: "#929090",
-    fontSize: "20px",
-    "&::after": {
-      content: "' '",
-      display: "block",
-      backgroundColor: "#929090",
-      height: "3px",
-      width: "300px"
-    }
+    fontSize: "20px"
   }
 };
 

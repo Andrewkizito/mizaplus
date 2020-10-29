@@ -1,1 +1,10 @@
-{}
+{
+	"auth": {
+		"mizaplusc10e3de9": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

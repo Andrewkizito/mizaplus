@@ -1,6 +1,18 @@
+//Auth Actions
+export const AUTH_START = "AUTH_START";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+export const AUTH_FAILURE = "AUTH_FAILURE";
+export const AUTH_SIGNOUT = "AUTH_SIGNOUT";
+
+export const SET_USER = "SET_USER";
+export const MOVE_TO_CONFIRMATION = "MOVE_TO_CONFIRMATION";
+
+//Cart Acctions
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
+export const SET_CART_ITEMS = "SET_CART_ITEMS";
+export const CLEAR_CART = "CLEAR_CART";
 
 export const NOTIFICATION_ADDED = "NOTIFICATION_ADDED";

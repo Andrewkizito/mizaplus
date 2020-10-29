@@ -1,0 +1,77 @@
+.Orders {
+    min-height: 570px;
+    background-color: #fff;
+    padding: 4rem 3rem;
+}
+
+.Box {
+    padding: 1rem 3rem;
+    margin-top: 3rem;
+}
+
+.Order {
+    padding: 1rem auto;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row;
+}
+
+.Order ul {
+    list-style: none;
+}
+
+.Order ul li {
+    padding: 0.4rem;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.Order ul li span{
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.Refresh {
+    display: flex;
+    flex-flow: row;
+    color: #3b5998;
+    font-weight: 600;
+}
+.Box h4 {
+    font-weight: 600;
+}
+
+.loading {
+    animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+@media (max-width: 600px) {
+    .Orders {
+        min-height: 570px;
+        background-color: #fff;
+        padding: 4rem 1rem;
+    }
+    
+    .Box {
+        padding: 1rem 1rem;
+        margin-top: 3rem;
+    }
+    
+    .Order {
+        padding: 1rem auto;
+        margin-bottom: 0.5rem;
+        justify-content: center;
+        align-items: center;
+        flex-flow: row;
+    }
+}

@@ -26,6 +26,11 @@ class Product {
 }
 
 export const initialState = {
+    AuthState: false,
+    loading: false,
+    error: null,
+    user: null,
+    confirmUser: null,
     Products: [
         new Product(`product-42567834`,"HikVision DTS356S","HikVision",120.85,product1,8,4.5),
         new Product(`product-09984847`,"Bosch TSD776","Bosch",122.22,product2,7,4.5),
@@ -134,13 +139,58 @@ const reducer = (state = initialState,action) => {
                 ...state,
                 Notifications: state.notifications ? [action.notification] : [action.notification]
             }
+        case actions.SET_USER:
+            return {
+                ...state,
+                user: action.user,
+            };
+        case actions.MOVE_TO_CONFIRMATION:
+            return {
+                ...state,
+                error: null,
+                loading: false,
+                confirmUser: action.user
+            };
+        case actions.AUTH_START:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        case actions.AUTH_SUCCESS:
+            return {
+                ...state,
+                AuthState: true,
+                user: action.user,
+                loading: false,
+            };
+        case actions.AUTH_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            };
+        case actions.AUTH_SIGNOUT:
+            return {
+                AuthState: false,
+                loading: false,
+                user: null,
+                error: null,
+            };
         case actions.ADD_TO_CART:
+            let savedCart = JSON.parse(localStorage.getItem("cart-Items"));
+            savedCart ? savedCart.push(action.product) : savedCart = [action.product];
+            localStorage.setItem("cart-Items",JSON.stringify(savedCart));
             return {
                 ...state,
                 Products: reduceStock(state.Products,action.product),
                 Cart: state.Cart.length > 0 ? addToCart(state.Cart,action.product) : [action.product]
             }
         case actions.REMOVE_FROM_CART:
+            let savedCart2 = JSON.parse(localStorage.getItem("cart-Items"));
+            let result = savedCart2.filter(item => item.id !== action.product.id);
+            console.log(result);
+            localStorage.setItem("cart-Items",JSON.stringify(result));
             return {
                 ...state,
                 Products: increaseStock(state.Products,action.product),
@@ -155,11 +205,20 @@ const reducer = (state = initialState,action) => {
             }
         case actions.DECREASE_QUANTITY:
             const decrease = decreaseQuantity(state.Cart,state.Products,action.id);
-            console.log(decrease);
             return {
                 ...state,
                 Products: decrease.products,
                 Cart: decrease.cart
+            }
+        case actions.SET_CART_ITEMS:
+            return {
+                ...state,
+                Cart: action.cart
+            }
+        case actions.CLEAR_CART:
+            return {
+                ...state,
+                Cart: []
             }
         default:
            return state;

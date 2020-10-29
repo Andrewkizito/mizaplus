@@ -9,7 +9,7 @@ const styles = () => {
             justifyContent: "center"
         },
         SliderImage: {
-            height: "300px",
+            height: window.innerWidth > 600 ? "300px" : "150px",
             justifyContent: "center",
             alignItems: "center",
             marginTop: "0.4rem",
