@@ -75,14 +75,8 @@ const Checkout = ({cart,history,AuthState,clearCart,Owner}) => {
   });
 
   useEffect(() => {
-    if(cart.length === 0){
-      history.push("/")
-    }
-  },[cart]);
-
-  useEffect(() => {
     if(activeStep === 3 && form.firstName !== "" && form.lastName !== "" && form.city !== "" && form.address !== "" &&
-      form.country !== "" && form.zipcode !== "" && form.cardName !== "" && form.cardNumber !== "" && form.cvv !== "" ){
+      form.country !== "" && form.zipcode !== "" && form.cardName !== "" && form.cardNumber !== "" && form.cvv !== "" && cart.length !== 0 ){
       setUi({loading: true,alert: null,error: null});
       let discount = 0;
       AuthState ? discount = 0.05 : discount = 0;
@@ -91,7 +85,7 @@ const Checkout = ({cart,history,AuthState,clearCart,Owner}) => {
         if(res.data.statusCode){
           setUi({loading: false,alert: res.data.data,error: null});
           clearCart();
-          setTimeout(() => history.push("/"), 4000);
+          setTimeout(() => history.push("/orders"), 2000);
         } else {
           setUi({loading: false,alert: null,error: res.data.error});
         }
@@ -226,7 +220,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        clearCart: () => dispatch(clearCart)
+        clearCart: () => dispatch(clearCart())
     }
 }
 

@@ -41,8 +41,7 @@ const Root = ({autoAuth,setCartFromLocalStorage,AuthState}) => {
                         <Route path="/register" component={Register} />
                         <Route path="/about-us" component={AboutUs} />
                         <Route path="/support" component={SectionContact} />
-                        <Route path="/product/:id" component={ProductView} />
-                        <Route path="/checkout" component={Checkout} />
+                        <Route path="/product" component={ProductView} />
                         <Route path="/cart" component={Cart} />
                         <Route path="/" component={Home}/>
                     </Switch>
@@ -52,7 +51,7 @@ const Root = ({autoAuth,setCartFromLocalStorage,AuthState}) => {
                         <Route path="/orders" component={Orders} />
                         <Route path="/login" component={LogIn} />
                         <Route path="/support" component={SectionContact} />
-                        <Route path="/product/:id" component={ProductView} />
+                        <Route path="/product" component={ProductView} />
                         <Route path="/checkout" component={Checkout} />
                         <Route path="/cart" component={Cart} />
                         <Route path="/" component={Home}/>

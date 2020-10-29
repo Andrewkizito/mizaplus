@@ -29,7 +29,7 @@ import './Cart.css';
 
 const useStyles = makeStyles(shoppingCartStyle);
 
-const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history}) => {
+const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history,AuthState}) => {
   const [ cartItems,setCartItems ] = useState(null);
   const [ totalPrice,setPrice ] = useState(null);
 
@@ -88,7 +88,7 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history}) => 
         });
         setPrice(total.toFixed(2));
         setCartItems(cartMarkUp);
-      } else if(MyCart.length === 0) {
+      } else if(MyCart && MyCart.length === 0) {
           setTimeout(() => history.push("/"), 1000);
       }
   },[MyCart]);
@@ -125,11 +125,10 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history}) => 
                                     col: {
                                     colspan: 3,
                                     text: (
-                                        <Link to="/checkout">
-                                            <Button color="warning" round>
+                                        
+                                            <Button color="warning" href="/checkout" round disabled={AuthState ? false : true}>
                                             Complete Purchase <KeyboardArrowRight />
                                             </Button>
-                                        </Link>
                                     )
                                     }
                                 }
@@ -170,7 +169,8 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history}) => 
 
 const mapStateToProps = state => {
     return {
-        MyCart: state.Cart
+        MyCart: state.Cart,
+        AuthState: state.AuthState
     }
 }
 

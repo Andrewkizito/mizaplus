@@ -49,7 +49,8 @@ const ProductPage = (props) => {
     arrows: true
   };
    
-  const { id } = props.match.params;
+  const { id } = props.location.state;
+  console.log(id);
 
   useEffect(() => {
     if(props.Products){
@@ -71,7 +72,7 @@ const ProductPage = (props) => {
     }
   },[id,props.Products]);
 
-  const AddToCart = () => {
+  const AddToCart = (pdt) => {
     const cartProduct = { id: product.id,name: product.name,vendor: product.vendor,image: product.image,price: product.price,quantity: amountSelect }
     props.PutToCart(cartProduct);
   }
@@ -159,7 +160,7 @@ const ProductPage = (props) => {
                       </FormControl>
                   </GridItem>
                   <GridItem md={4} sm={4} style={{display: "flex",flexFlow: "row",alignItems: "center",justifyContent: "center"}}>
-                    <Button color="warning" disabled={amountSelect === 0 && true} onClick={() => AddToCart()}>
+                    <Button color="warning" disabled={amountSelect === 0 && true} onClick={() => AddToCart(product)}>
                       Add to Cart &nbsp; <ShoppingCartOutlined />
                     </Button>
                   </GridItem>
@@ -210,7 +211,7 @@ const ProductPage = (props) => {
                      <Slider {...settings}>
                      { similarProducts.map(pdt => {
                         return <div key={pdt.id}>
-                                <Link to="#pdt" onClick={() => updateProduct(pdt.id)}>
+                                <Link to={{state: {id: pdt.id}}} onClick={() => updateProduct(pdt.id)}>
                                     <div>
                                         <div className={classes.productCard}>
                                             <img src={pdt.image} alt="cardProduct" className={classes.pdtImage}/>
@@ -227,7 +228,7 @@ const ProductPage = (props) => {
                   { (similarProducts && window.innerWidth <= 600) && 
                     <GridContainer>
                       { similarProducts.map(pdt => {
-                      return <Link to="#pdt" onClick={() => updateProduct(pdt.id)}>
+                      return <Link to={{state: {id: pdt.id}}} onClick={() => updateProduct(pdt.id)}>
                               <div>
                                 <div className={classes.productCard}>
                                   <img src={pdt.image} alt="cardProduct" className={classes.pdtImage}/>

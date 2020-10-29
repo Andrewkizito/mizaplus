@@ -44,7 +44,7 @@ const Product = ({id,name,vendor,price,rating,image,pdtClass}) => {
               </div>
               <div className={classNames(classes.stats, classes.mlAuto)}>
                 <Link to={{
-                  pathname: `product/${id}`,
+                  pathname: `/product`,
                   state: {
                     id: id
                   }
