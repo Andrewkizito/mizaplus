@@ -97,6 +97,7 @@ const increaseQuantity = (Cart,Products,Id) => {
     const cart = [...Cart];
     const products = [...Products];
     const id = Id;
+    let savedCart = JSON.parse(localStorage.getItem("cart-Items"));
     cart.forEach((cartItem,i) => {
         if(cartItem.id === id){
             products.forEach((pdt,index) => {
@@ -104,6 +105,12 @@ const increaseQuantity = (Cart,Products,Id) => {
                     if(pdt.inStock !== 0){
                         cart[i] = {...cartItem,quantity: cartItem.quantity + 1}
                         products[index] = {...pdt,inStock: pdt.inStock - 1}
+                        savedCart.map(item => {
+                            if(item.id === pdt.id){
+                                item.quantity += 1;
+                            }
+                        });
+                        localStorage.setItem("cart-Items",JSON.stringify(savedCart));
                     }
                 }
             })
@@ -116,6 +123,7 @@ const decreaseQuantity = (Cart,Products,Id) => {
     const cart = [...Cart];
     const products = [...Products];
     const id = Id;
+    let savedCart = JSON.parse(localStorage.getItem("cart-Items"));
     cart.forEach((cartItem,i) => {
         if(cartItem.id === id){
             products.forEach((pdt,index) => {
@@ -123,6 +131,12 @@ const decreaseQuantity = (Cart,Products,Id) => {
                     if(cartItem.quantity > 1){
                         cart[i] = {...cartItem,quantity: cartItem.quantity - 1}
                         products[index] = {...pdt,inStock: pdt.inStock + 1}
+                        savedCart.map(item => {
+                            if(item.id === pdt.id){
+                                item.quantity -= 1;
+                            }
+                        });
+                        localStorage.setItem("cart-Items",JSON.stringify(savedCart));
                     }
                 }
             })
@@ -189,7 +203,6 @@ const reducer = (state = initialState,action) => {
         case actions.REMOVE_FROM_CART:
             let savedCart2 = JSON.parse(localStorage.getItem("cart-Items"));
             let result = savedCart2.filter(item => item.id !== action.product.id);
-            console.log(result);
             localStorage.setItem("cart-Items",JSON.stringify(result));
             return {
                 ...state,

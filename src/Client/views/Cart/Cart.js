@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux"; 
 import { remove_from_cart,decrease_quantity,increase_quantity } from "Client/store/Actions/ActionTypes";
+import { Link, withRouter } from "react-router-dom";
 
 // Importing Core Components
 import Tooltip from "@material-ui/core/Tooltip";
@@ -13,13 +14,8 @@ import Table from "Client/components/Table/Table.js";
 import Button from "Client/components/CustomButtons/Button.js";
 import Card from "Client/components/Card/Card.js";
 import CardBody from "Client/components/Card/CardBody.js";
-import GridItem from "Client/components/Grid/GridItem";
-import GridContainer from "Client/components/Grid/GridContainer";
-import { FormControl,Select,MenuItem,TextField } from "@material-ui/core";
 import Muted from "Client/components/Typography/Muted";
-import Paginations from "Client/components/Pagination/Pagination";
 import ScrollAnimation from "react-animate-on-scroll";
-import Success from "Client/components/Typography/Success";
 
 // @material-ui/icons
 import { Close,Add,Remove,KeyboardArrowRight } from "@material-ui/icons";
@@ -29,17 +25,11 @@ import shoppingCartStyle from "../../assets/jss/material-kit-pro-react/views/sho
 import MizaplusHeader from "../UI/Header/Header.js";
 import MizaplusFooter from "../UI/Footer/Footer.js";
 
-//Importing Credit Cards
-import credit1 from "Client/assets/images/credit.png";
-import credit2 from "Client/assets/images/credit1.png";
-import credit3 from "Client/assets/images/credit2.png";
-
 import './Cart.css';
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(shoppingCartStyle);
 
-const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
+const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease,history}) => {
   const [ cartItems,setCartItems ] = useState(null);
   const [ totalPrice,setPrice ] = useState(null);
 
@@ -98,13 +88,15 @@ const Cart = ({MyCart,RemoveItem,QuantityIncrease,QuantityDecrease}) => {
         });
         setPrice(total.toFixed(2));
         setCartItems(cartMarkUp);
+      } else if(MyCart.length === 0) {
+          setTimeout(() => history.push("/"), 1000);
       }
   },[MyCart]);
 
   return (
       <div>
         <MizaplusHeader/>
-        <div style={{paddingTop: "90px"}} className={classNames(classes.main)}>
+        <div style={{paddingTop: "90px",minHeight: "600px"}} className={classNames(classes.main)}>
             <div className={classes.container}>
                 <h3 className={classes.cardTitle}>Shopping Cart</h3>
                 <Card plain>
@@ -190,4 +182,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Cart);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Cart));

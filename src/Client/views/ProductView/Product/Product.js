@@ -63,7 +63,7 @@ const ProductPage = (props) => {
         });
         let amounts = [];
         
-        for(let index = 0;index < filtered.inStock + 1;index ++){
+        for(let index = 1;index < filtered.inStock + 1;index ++){
           amounts.push(index);
         }
         setAmounts(amounts);
