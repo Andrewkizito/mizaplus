@@ -14,9 +14,6 @@ import GridItem from 'Client/components/Grid/GridItem';
 import Typography from 'Client/components/Typography/Info';
 import ReactStars from 'react-rating-stars-component';
 
-//Importing icons
-import { StarHalf,Star } from '@material-ui/icons';
-
 //importing styles
 import styles from 'Client/assets/jss/material-kit-pro-react/views/ecommerceSections/latestOffersStyle';
 import { Link } from 'react-router-dom';
@@ -32,7 +29,11 @@ const Product = ({id,name,vendor,price,rating,image,pdtClass}) => {
             <CardBody plain className={classes.Body}>
               <h4 className={classNames(classes.cardTitle,classes.textCenter)}>{name}</h4>
               <Typography variant="h6">{vendor}</Typography>
-              <ReactStars count={5} value={rating} half={true} halfIcon={StarHalf} filledIcon={Star} size={20}/>
+              <ReactStars count={5} value={rating} edit={false} size={20}
+                isHalf={true}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}/>
             </CardBody>
             <CardFooter plain>
               <div className={classes.priceContainer}>

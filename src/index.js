@@ -14,6 +14,7 @@ import reducer from "./Client/store/Reducer/Reducer";
 import config from "./aws-exports";
 import Amplify from "aws-amplify";
 
+import "./index.css";
 Amplify.configure(config);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

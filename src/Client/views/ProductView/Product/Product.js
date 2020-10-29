@@ -22,8 +22,8 @@ import CardBody from "Client/components/Card/CardBody.js";
 import Slider from "react-slick";
 import Info from "Client/components/Typography/Info";
 import Danger from "Client/components/Typography/Danger";
-import Pagination from "Client/components/Pagination/Pagination";
 import { Link } from "react-router-dom";
+
 
 import productStyle from "Client/assets/jss/material-kit-pro-react/views/productStyle.js";
 import { existenceCheck } from "Client/store/Actions/ActionTypes";
@@ -38,7 +38,6 @@ const ProductPage = (props) => {
   const [ similarProducts,setSimilar ] = useState(null);
   const [ amountSelect,selectAmout ] = useState(0);
   const [ amountAvailable,setAmounts ] = useState(null); 
-  const [ step,setStep ] = useState("1");
 
   const settings = {
     dots: true, 
@@ -87,6 +86,7 @@ const ProductPage = (props) => {
             return pdt;
           }
         });
+        window.scrollTo({top: 0});
         setSimilar(similar.splice(0,4));
     }
   }
@@ -104,7 +104,7 @@ const ProductPage = (props) => {
                 </div>
               </GridItem>
               <GridItem md={6} sm={6}>
-                <h2 className={classes.title}>{product.name}</h2>
+                <h2 className={classes.title} id="pdt">{product.name}</h2>
                 <h3 className={classes.mainPrice}><small>€</small>{product.price}</h3>
                 <Accordion
                   active={0}
@@ -210,7 +210,7 @@ const ProductPage = (props) => {
                      <Slider {...settings}>
                      { similarProducts.map(pdt => {
                         return <div key={pdt.id}>
-                                <Link to={'product/${pdt.id'}>
+                                <Link to="#pdt" onClick={() => updateProduct(pdt.id)}>
                                     <div>
                                         <div className={classes.productCard}>
                                             <img src={pdt.image} alt="cardProduct" className={classes.pdtImage}/>
@@ -227,7 +227,7 @@ const ProductPage = (props) => {
                   { (similarProducts && window.innerWidth <= 600) && 
                     <GridContainer>
                       { similarProducts.map(pdt => {
-                      return <Link to={'product/${pdt.id'}>
+                      return <Link to="#pdt" onClick={() => updateProduct(pdt.id)}>
                               <div>
                                 <div className={classes.productCard}>
                                   <img src={pdt.image} alt="cardProduct" className={classes.pdtImage}/>

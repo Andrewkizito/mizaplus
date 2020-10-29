@@ -60,7 +60,7 @@ const Root = ({autoAuth,setCartFromLocalStorage,AuthState}) => {
                  }
             </BrowserRouter>
         </div>
-    )
+    ) 
 }
 
 const mapStateToProps = state => {
