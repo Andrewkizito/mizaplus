@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 
 //Importing helper functions
-import classNames from "classnames";
-import { makeStyles } from "@material-ui/core/styles";
+import { UpdateState } from "Client/store/Utils/Update";
 
 import GridContainer from "Client/components/Grid/GridContainer";
 import GridItem from "Client/components/Grid/GridItem";
@@ -17,12 +16,14 @@ import "./Contact.css";
 import MizaplusHeader from "../UI/Header/Header";
 import MizaplusFooter from "../UI/Footer/Footer";
 import { Container } from "@material-ui/core";
+import Alert from "../UI/Alert/Alert";
+import Loader from "../UI/Loader/Loader";
 
 const SectionContact = () => {
   const [feedback, update] = useState({
     name: "",
     email: "",
-    phone: "",
+    subject: "",
     message: "",
   });
   const [ui, updateUi] = useState({
@@ -34,12 +35,14 @@ const SectionContact = () => {
   const send = () => {
     updateUi({ loading: true, error: null, success: null });
     Axios.post(
-      "https://d7xq2u9le6.execute-api.us-east-2.amazonaws.com/Dev/send-email",
+      "https://z7uebszilc.execute-api.us-east-2.amazonaws.com/prod/email",
       { ...feedback }
     )
       .then((res) => {
-        updateUi({ loading: false, success: res.data });
-        update({ name: "", email: "", phone: "", message: "" });
+        if (res.data.statusCode === 200) {
+          updateUi({ loading: false, success: res.data.data, error: null });
+          update({ name: "", email: "", phone: "", message: "" });
+        }
       })
       .catch((err) => {
         updateUi({ loading: false, success: null, error: err.message });
@@ -117,17 +120,12 @@ const SectionContact = () => {
                 ></iframe>
               </GridItem>
               <GridItem sm={12} md={6}>
-                <div className="form contact-form">
-                  <div id="sendmessage">
-                    Your message has been sent. Thank you!
-                  </div>
-                  <div id="errormessage"></div>
-                  <form
-                    action=""
-                    method="post"
-                    role="form"
-                    className="contactForm"
-                  >
+                { ui.loading && <Loader text="Sending Your Message..."/> }
+                { ui.success && <Alert text={ui.success} color="success"/> }
+                { ui.error && <Alert text={ui.error} color="danger"/> }
+                { !ui.loading &&
+                  <div className="form contact-form">
+                  <form className="contactForm">
                     <div className="form-group">
                       <input
                         type="text"
@@ -137,6 +135,10 @@ const SectionContact = () => {
                         placeholder="Your Name"
                         data-rule="minlen:4"
                         data-msg="Please enter at least 4 chars"
+                        value={feedback.name}
+                        onChange={(event) =>
+                          UpdateState("name", update, event.target.value)
+                        }
                       />
                       <div className="validation"></div>
                     </div>
@@ -149,6 +151,10 @@ const SectionContact = () => {
                         placeholder="Your Email"
                         data-rule="email"
                         data-msg="Please enter a valid email"
+                        value={feedback.email}
+                        onChange={(event) =>
+                          UpdateState("email", update, event.target.value)
+                        }
                       />
                       <div className="validation"></div>
                     </div>
@@ -161,6 +167,10 @@ const SectionContact = () => {
                         placeholder="Subject"
                         data-rule="minlen:4"
                         data-msg="Please enter at least 8 chars of subject"
+                        value={feedback.subject}
+                        onChange={(event) =>
+                          UpdateState("subject", update, event.target.value)
+                        }
                       />
                       <div className="validation"></div>
                     </div>
@@ -172,16 +182,30 @@ const SectionContact = () => {
                         data-rule="required"
                         data-msg="Please write something for us"
                         placeholder="Message"
+                        value={feedback.message}
+                        onChange={(event) =>
+                          UpdateState("message", update, event.target.value)
+                        }
                       ></textarea>
-                      <div className="validation"></div>
                     </div>
                     <div className="text-center">
-                      <Button round color="facebook">
+                      <Button
+                        round
+                        color="facebook"
+                        disabled={
+                          (feedback.name === "" ||
+                            feedback.email === "" ||
+                            feedback.subject === "" ||
+                            feedback.message === "") &&
+                          true
+                        }
+                        onClick={() => send()}
+                      >
                         Send Message
                       </Button>
                     </div>
                   </form>
-                </div>
+                </div> }
               </GridItem>
             </GridContainer>
           </div>
