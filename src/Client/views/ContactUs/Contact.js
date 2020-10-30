@@ -69,8 +69,8 @@ const SectionContact = () => {
                   <div className="single-icon">
                     <i className="fa fa-mobile"></i>
                     <p>
-                      <a href="tel:+256772636767" style={{ color: "inherit" }}>
-                        Mobile: +256772636767
+                      <a href="tel:+256702534589" style={{ color: "inherit" }}>
+                        Mobile: +256702534589
                       </a>
                       <br />
                       <small>Monday-Friday (8am - 5pm)</small>
@@ -85,7 +85,7 @@ const SectionContact = () => {
                   <div className="single-icon">
                     <i className="fa fa-envelope"></i>
                     <p>
-                      Email: sgt@sgttecnical.com
+                      Email: AndrewKizito54@gmail.com
                       <br />
                     </p>
                   </div>
